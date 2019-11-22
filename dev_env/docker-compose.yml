@@ -17,8 +17,8 @@ services:
       - ./data/redis/:/data
     expose: 
       - "6379"
-    ports:
-      - "6379:6379"
+    # ports:
+    #   - "6379:6379"
 
   mysql:
     build:
@@ -32,8 +32,8 @@ services:
       - ./data/mysql/:/var/lib/mysql
     expose:
       - "3306"
-    ports:
-      - "3306:3306"
+    # ports:
+    #   - "3306:3306"
 
   node_server:
     build:
