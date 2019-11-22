@@ -1,0 +1,47 @@
+version: '3.3'
+
+services:
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - node_server
+
+  redis:
+    image: "redis:alpine"
+    volumes:
+      - ./data/redis/:/data
+    expose: 
+      - "6379"
+    ports:
+      - "6379:6379"
+
+  mysql:
+    build:
+      context: ./mysql
+      args:
+        - MYSQL_DATABASE=default_database
+        - MYSQL_USER=default_user
+        - MYSQL_PASSWORD=12345678
+        - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./data/mysql/:/var/lib/mysql
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+
+  node_server:
+    build:
+      context: ./node
+    volumes:
+      - ../:/code
+    tty: true
+    expose:
+      - "7001"
+    
+      
